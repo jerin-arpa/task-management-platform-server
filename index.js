@@ -26,10 +26,11 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const boardCollection = client.db("taskManagementDB").collection("board");
 
+    // Send data into mongodb
     app.post("/board", async (req, res) => {
       const newBoard = req.body;
       console.log(newBoard);
@@ -37,10 +38,11 @@ async function run() {
       res.send(result);
     });
 
-    // app.get("/board", async (req, res) => {
-    //   const result = await boardDataCollection.find().toArray();
-    //   res.send(result);
-    // });
+    // get the data in localhost
+    app.get("/board", async (req, res) => {
+      const result = await boardCollection.find().toArray();
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
